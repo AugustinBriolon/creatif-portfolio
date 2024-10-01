@@ -1,8 +1,8 @@
 ---
-import { type Project, projects } from "../../../data";
-import Layout from "../../../layouts/Layout.astro";
-import ProjectCard from "../../../components/ProjectCard.astro";
-const { slug } = Astro.params;
+import { type Project, projects } from "../data";
+import Layout from "../layouts/Layout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+
 
 export function getStaticPaths() {
   return [
@@ -14,6 +14,7 @@ export function getStaticPaths() {
   ];
 }
 
+const { slug } = Astro.params;
 const project = projects.find((project) => project.slug === slug) as Project;
 ---
 
@@ -31,13 +32,13 @@ const project = projects.find((project) => project.slug === slug) as Project;
         <img
           src={project.cover}
           alt={project.name}
-          class="w-full h-full object-cover rounded-xl shadow-2xl shadow-gray-200 border-b"
+          class="w-full h-full object-cover rounded-xl shadow-2xl shadow-gray-200 border-b animate-in"
           transition:name={`${slug} image`}
         />
       </div>
       <article class="py-4 flex justify-between flex-col">
         <div>
-          <h1 class="text-3xl sm:text-5xl font-bold animate-in">
+          <h1 class="text-3xl sm:text-5xl font-bold animate-in" >
             {project.name}
           </h1>
           <div transition:name={`${slug} title`}></div>
@@ -50,24 +51,12 @@ const project = projects.find((project) => project.slug === slug) as Project;
         </div>
         <div class="pt-2 sm:pt-8 text-right">
           <div class="text-4xl font-semibold" transition:name={`${slug} price`}>
-            ${project.date}
+            {project.date}
           </div>
-          <div class="text-xs text-gray-500">* This is a fictional price</div>
-          <button
-            type="button"
-            class="mt-4 px-5 py-2 bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-full"
-            >Add to cart</button
-          >
         </div>
       </article>
     </div>
-    <div class="py-6 md:py-20">
-      Step into a neon-lit realm where fashion meets the digital frontier. 
-      Our boutique is a portal to tomorrow's style, where code and couture collide.
-       Unleash your inner tech fashionista with attire that bridges the gap between 
-       reality and the virtual cosmos.
-    </div>
-    <h4 class="font-bold text-lg pb-6">You might also like</h4>
+    <h4 class="font-bold text-lg pb-6">Mes autres projets ({project.category})</h4>
     <div class="flex flex-wrap justify-center sm:justify-normal gap-4">
       {
         projects
@@ -77,12 +66,3 @@ const project = projects.find((project) => project.slug === slug) as Project;
     </div>
   </div>
 </Layout>
-
-<script>
-  document.addEventListener("click", (event) => {
-    if (location.pathname === "/") return;
-    if ((event as any)?.target?.tagName === "A") {
-      document.querySelector(".animate-in")?.classList.add("opacity-0");
-    }
-  });
-</script>
