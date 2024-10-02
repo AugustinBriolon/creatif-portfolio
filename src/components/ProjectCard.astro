@@ -9,17 +9,34 @@ const { project } = Astro.props;
 const transitionName = project.slug;
 ---
 
-<a href={`/${project.slug}`} class="block">
-  <article
-    class="group bg-flex flex-col sm:w-64 w-1/4 bg-white shadow-sm rounded-lg overflow-hidden hover:shadow-xl hover:shadow-gray-100 transition-all"
-  >
-    <div class="sm:w-64 w-1/4 overflow-hidden">
-      <img
-        src={project.cover}
-        alt={project.name}
-        transition:name={`${transitionName} image`}
-        class="object-cover object-center w-full grayscale-[0.1] group-hover:grayscale-0 h-full rounded-md group-hover:scale-105 transition-all"
-      />
+
+<li class="group relative rounded-xl h-fit border border-gray-200 list-none overflow-hidden hover:shadow-md">
+  <a href={`/${project.slug}`} class="flex flex-col w-full" aria-label={project.name} data-project>
+    <img 
+      src={project.cover}
+      alt={project.name}
+      transition:name={`${transitionName} image`} 
+      class="w-full object-center object-cover border-b border-gray-200"
+    >
+
+    <div class="absolute bottom-0 sm:bottom-[-100px]  w-full p-1 group-hover:bottom-0 transition-all duration-500 ease-in-out">
+      <div class="bg-white w-full rounded-md shadow-xl">
+        <h2 
+          class="leading-10 line-clamp-1 text-lg px-2 font-bold"
+        >{project.name}</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-projets items-start gap-4 px-2 pb-2">
+          <div class="flex flex-col items-start justify-center">
+              <p class="text-blue-500 font-semibold text-sm">Date</p>
+              <p class="whitespace-nowrap text-black text-sm ">{project.date}</p>
+          </div>
+          <div class="flex flex-col items-start justify-center">
+              <p class="text-blue-500 font-semibold text-sm ">Categorie</p>
+              <p class="capitalize text-black text-sm ">{project.category}</p>
+          </div>
+        </div>
+      </div>
     </div>
-  </article>
-</a>
+  </a>
+</li>
+
+

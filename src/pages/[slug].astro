@@ -1,7 +1,9 @@
 ---
-import { type Project, projects } from "../data";
 import Layout from "../layouts/Layout.astro";
 import ProjectCard from "../components/ProjectCard.astro";
+import Button from "../components/Button.astro";
+import { type Project, projects } from "../data";
+import '../styles/style.css';
 
 
 export function getStaticPaths() {
@@ -23,46 +25,59 @@ const project = projects.find((project) => project.slug === slug) as Project;
   description={project.description}
   image={project.cover}
 >
-  <div class="max-w-4xl mx-auto relative">
-    <div class="flex gap-2 pb-10 items-center text-gray-500">
-      <a href="/">Home</a>
+  <div class="max-w-6xl mx-auto">
+
+    <div class="flex justify-between gap-2 pb-10 items-center">
+      <a href="/" class="relative text-black">
+        <img src="/icons/arrow.svg" alt="Retour" class="w-6 h-6 absolute -left-8 top-1" />
+        <span class="satoshi text-xl" style="view-transition-name: name">Augustin Briolon</span>
+      </a>
+
+      <Button text="Voir le site" href={project.url} />
     </div>
-    <div class="flex flex-col md:flex-row sm sm:gap-8">
-      <div class="max-w-[450px] w-full h-full max-h-[450px]">
+
+    <div class="flex flex-col gap-4">
         <img
           src={project.cover}
           alt={project.name}
-          class="w-full h-full object-cover rounded-xl shadow-2xl shadow-gray-200 border-b animate-in"
+          class="w-full h-full object-cover rounded-xl"
           transition:name={`${slug} image`}
         />
-      </div>
-      <article class="py-4 flex justify-between flex-col">
-        <div>
-          <h1 class="text-3xl sm:text-5xl font-bold animate-in" >
-            {project.name}
-          </h1>
-          <div transition:name={`${slug} title`}></div>
-          <p
-            class="max-w-sm py-4 text-lg"
-            transition:name={`${slug} description`}
-          >
-            {project.description}
-          </p>
-        </div>
-        <div class="pt-2 sm:pt-8 text-right">
-          <div class="text-4xl font-semibold" transition:name={`${slug} price`}>
-            {project.date}
+
+        <div class="flex flex-col gap-8">
+          <div>
+            <h3 class="text-3xl sm:text-5xl font-bold animate-in">{project.name}</h3>
+            <p class="text-sm font-semibold text-gray-500">{project.date}</p>
           </div>
+
+          <p class="text-lg w-1/2">{project.description}</p>
+
+          {project.team && (
+            <div class="flex flex-col">
+              <p>Réalisé avec :</p> 
+              <div class="flex gap-4">
+                {project.team.map((member) => (
+                    <a class="text-sm text-blue-500" href={member.link} target="_blank">
+                      @{member.name}
+                    </a>
+                ))}
+            </div>
+            </div>
+          )}
         </div>
-      </article>
+
     </div>
-    <h4 class="font-bold text-lg pb-6">Mes autres projets ({project.category})</h4>
-    <div class="flex flex-wrap justify-center sm:justify-normal gap-4">
-      {
-        projects
-          .filter((p) => p.category === project.category && p.id !== project.id)
-          .map((pr) => <ProjectCard project={pr} />)
-      }
+
+    <div class="py-10 w-full flex flex-col gap-4">
+      <h4 class="text-lg">De la même catégorie : <span class="uppercase panchang">{project.category}</span></h4>
+      <div class="container grid gap-projects md:grid-cols-2 xl:grid-cols-3">
+        {
+          projects
+            .filter((p) => p.category === project.category && p.id !== project.id)
+            .map((pr) => <ProjectCard project={pr} />)
+        }
+      </div>
     </div>
+
   </div>
 </Layout>

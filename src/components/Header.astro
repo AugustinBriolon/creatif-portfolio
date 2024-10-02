@@ -1,0 +1,24 @@
+---
+import ButtonSocial from './ButtonSocial.astro';
+---
+
+<header class="container flex flex-col sm:flex-row items-center justify-between gap-4">
+  <div class="flex flex-col items-center sm:items-start">
+    <h1 class="text-2xl"><span class="satoshi" style="view-transition-name: name">Augustin Briolon</span></h1>
+    <h2 class="animate-in text-lg">Développeur Web</h2>  
+  </div>
+
+  <nav>
+    <ul class="flex gap-2">
+      <li class="animate-in">
+        <ButtonSocial icon='x'/>
+      </li>
+      <li class="animate-in">
+        <ButtonSocial icon='github'/>
+      </li>
+      <li class="animate-in">
+        <ButtonSocial icon='linkedin'/>
+      </li>
+    </ul>
+  </nav>
+</header>

@@ -1,0 +1,28 @@
+---
+interface Props {
+  icon: 'github' | 'x' | 'linkedin';
+}
+
+const { icon } = Astro.props;
+
+const iconsData = {
+  github: {
+    href: 'https://github.com/AugustinBriolon',
+    src: '/icons/github.svg',
+  },
+  linkedin: {
+    href: 'https://www.linkedin.com/in/augustin-briolon/',
+    src: '/icons/linkedin.svg',
+  },
+  x: {
+    href: 'https://x.com/AugustinBriolon',
+    src: '/icons/x.svg',
+  },
+};
+
+const { href, src } = iconsData[icon];
+---
+
+<a href={href} rel="noopener noreferrer" target="_blank" class="cursor-link flex items-center justify-center p-4 hover:bg-btn bg-btn sm:bg-transparent rounded-full  aspect-square">
+  <img src={src} alt={`Icon ${icon}`} class="w-5 h-5" />
+</a>
